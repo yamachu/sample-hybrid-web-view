@@ -2,23 +2,19 @@
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
-
 	public MainPage()
 	{
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private void OnSendMessageButtonClicked(object sender, EventArgs e)
 	{
-		count++;
+		hybridWebView.SendRawMessage($"Hello from C#!");
+	}
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+	private async void OnHybridWebViewRawMessageReceived(object sender, HybridWebViewRawMessageReceivedEventArgs e)
+	{
+		await DisplayAlert("Raw Message Received", e.Message, "OK");
 	}
 }
 
